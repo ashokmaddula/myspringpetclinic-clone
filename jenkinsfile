@@ -6,12 +6,12 @@ pipeline {
     }
     triggers {
         
-        pollSCM('* * * * *')
+        pollSCM('18 * * * 1-5')
     }
     stages {
         stage('vcs') {
             steps {
-                git branch: "REL_INT_1.0", url: 'https://github.com/GitPracticeRepo/spring-petclinic.git'
+                git branch: "qa", url: 'https://github.com/GitPracticeRepo/spring-petclinic.git'
             }
             
         }
@@ -36,27 +36,6 @@ pipeline {
                 }
             }
         }
-
-        //stage("Quality Gate") {
-        //    steps {
-        //      timeout(time: 1, unit: 'HOURS') {
-        //        waitForQualityGate abortPipeline: true
-        //      }
-        //    }
-        //  }
-
-          stage ('Exec Maven') {
-            steps {
-                rtMavenRun (
-                    tool: 'MVN_DEFAULT', // Tool name from Jenkins configuration
-                    pom: 'pom.xml',
-                    goals: 'clean install',
-                    deployerId: "MAVEN_DEPLOYER"
-                )
-            }
-        }
-
-        
     }
 
 }
