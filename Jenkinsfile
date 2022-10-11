@@ -2,11 +2,6 @@ pipeline {
     agent any
     parameters {
         string(name: 'MAVEN_GOAL', defaultValue: 'clean install', description: 'maven goal')
-
-    }
-    triggers {
-        
-        pollSCM('* * * * *')
     }
     stages {
         stage('vcs') {
