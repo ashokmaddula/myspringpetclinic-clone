@@ -1,41 +1,16 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'MAVEN_GOAL', defaultValue: 'clean install', description: 'maven goal')
-    }
     stages {
         stage('vcs') {
             steps {
-                git branch: "main", url: 'https://github.com/GitPracticeRepo/spring-petclinic.git'
+                git branch: "main", url: 'https://github.com/GitPracticeRepo/MySpringPetclinicClone.git'
             }
             
         }
-         stage ('Artifactory configuration') {
+        stage('Build the Code') {
             steps {
-                
-
-                rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",
-                    serverId: "JFROG_OCT22",
-                    releaseRepo: 'qt-libs-release-local',
-                    snapshotRepo: 'qt-libs-snapshot-local'
-                )
-
-               
+                sh script: 'mvn clean install'
             }
         }
-        
-            steps {
-                rtMavenRun (
-                    tool: 'MVN_DEFAULT', // Tool name from Jenkins configuration
-                    pom: 'pom.xml',
-                    goals: 'clean install',
-                    deployerId: "MAVEN_DEPLOYER"
-                )
-            }
-        }
-
         
     }
-
-}
