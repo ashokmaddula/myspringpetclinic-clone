@@ -30,27 +30,6 @@ pipeline {
                 }
             }
         }
-
-        //stage("Quality Gate") {
-        //    steps {
-        //      timeout(time: 1, unit: 'HOURS') {
-        //        waitForQualityGate abortPipeline: true
-        //      }
-        //    }
-        //  }
-
-          stage ('Exec Maven') {
-            steps {
-                rtMavenRun (
-                    tool: 'MVN_DEFAULT', // Tool name from Jenkins configuration
-                    pom: 'pom.xml',
-                    goals: 'clean install',
-                    deployerId: "MAVEN_DEPLOYER"
-                )
-            }
-        }
-
-        
     }
 
 }
